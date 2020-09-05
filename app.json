@@ -1,7 +1,11 @@
 {
   "expo": {
-    "name": "react-native-expo",
-    "slug": "react-native-expo",
+    "name": "retarded-stock-app",
+    "slug": "retarded-stock-app",
+    "platforms": [
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -23,6 +27,7 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": ""
   }
 }
