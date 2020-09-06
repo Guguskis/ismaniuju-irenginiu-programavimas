@@ -1,9 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Image, SafeAreaView, Text } from "react-native";
-
+import colors from "../config/colors";
 
 function BrowseItemsScreen() {
-
     return (
         <SafeAreaView style={styles.background}>
             <View style={styles.previousButton} />
@@ -13,18 +12,17 @@ function BrowseItemsScreen() {
                 source={require("../assets/images/chair.jpg")}
                 resizeMode="contain" />
         </SafeAreaView>
-
     );
 }
 
 const styles = StyleSheet.create({
     background: {
-        backgroundColor: "black",
+        backgroundColor: colors.black,
         flex: 1 // Make sure it fills entire screen
     },
     previousButton: {
         position: "absolute",
-        backgroundColor: "orange",
+        backgroundColor: colors.primary,
         width: 50,
         height: 50,
         top: 30,
@@ -32,7 +30,7 @@ const styles = StyleSheet.create({
     },
     nextButton: {
         position: "absolute",
-        backgroundColor: "cyan",
+        backgroundColor: colors.secondary,
         width: 50,
         height: 50,
         top: 30,
