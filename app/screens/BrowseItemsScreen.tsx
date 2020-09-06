@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image, SafeAreaView } from "react-native";
+import { View, StyleSheet, Image, SafeAreaView, Text } from "react-native";
 
 
 function BrowseItemsScreen() {

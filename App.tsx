@@ -2,12 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import useCachedResources from './app/hooks/useCachedResources';
+import useColorScheme from './app/hooks/useColorScheme';
+import Navigation from './app/navigation';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import WelcomeScreen from './screens/WelcomeScreen';
-import BrowseItemsScreen from './screens/BrowseItemsScreen';
+import WelcomeScreen from './app/screens/WelcomeScreen';
+import BrowseItemsScreen from './app/screens/BrowseItemsScreen';
 // import { View } from './components/Themed';
 
 export default function App() {
