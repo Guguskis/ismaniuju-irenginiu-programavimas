@@ -17,7 +17,12 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   } else {
-    return <BrowseItemsScreen />;
+    return (
+      <SafeAreaProvider>
+        <Navigation colorScheme={colorScheme} />
+        <StatusBar />
+      </SafeAreaProvider>
+    )
   }
 }
 

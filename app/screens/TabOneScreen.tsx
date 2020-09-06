@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Image, Touchable } from 'react-native';
 
-import { Text, View } from '../../components/Themed';
+import { Text, View } from '../components/Themed';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 export default function TabOneScreen() {
