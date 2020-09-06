@@ -7,6 +7,7 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import WelcomeScreen from './screens/WelcomeScreen';
+import BrowseItemsScreen from './screens/BrowseItemsScreen';
 // import { View } from './components/Themed';
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   } else {
-    return <WelcomeScreen />;
+    return <BrowseItemsScreen />;
   }
 }
 
