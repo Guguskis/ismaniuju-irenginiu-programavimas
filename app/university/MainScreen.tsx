@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
+import Button from "./Button";
 
 
 
@@ -29,20 +30,14 @@ export default function MainScreen() {
                 onChangeText={setText}
                 value={text}
             />
-
-            <TouchableOpacity
+            <Button
                 style={styles.button}
                 onPress={() => navigation.navigate("TextInput", { text: text })}
-            >
-                <Text style={styles.buttonText}>Change text</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
+                text="Change text" />
+            <Button
                 style={styles.button}
                 onPress={() => navigation.navigate("CountWords", { text: text })}
-            >
-                <Text style={styles.buttonText}>Count words</Text>
-            </TouchableOpacity>
+                text="Count words" />
         </View>
     );
 }
@@ -53,8 +48,8 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: "blue",
         borderRadius: 15,
-        justifyContent: "center",
-        alignItems: "center"
+        fontSize: 20,
+        color: "white"
     },
     buttonText: {
         fontSize: 20,
