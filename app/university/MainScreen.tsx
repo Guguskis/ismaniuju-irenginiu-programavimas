@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Linking, Platform } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
 import Button from "./Button";
@@ -17,10 +17,13 @@ export default function MainScreen() {
         setText(route.params?.text);
     }, [route.params?.text]);
 
-    // Pirmam Activity ivedame teksta CHECK
-    // Paspaudziam mygtuka ir isiunciam teksta i antra Acticity CHECK
-    // Paspaudziam mygtuka ir naujame Activity parodo zodziu kieki CHECK
-    // Teksta issiunciame sms zinute (implicit intent)
+    const onPressSendSms = async () => {
+        const smsText = text ? text : "";
+        const divider = Platform.OS === "ios" ? "&" : "?";
+        const url = `sms:LTT store dot com${divider}body=${smsText}`;
+
+        const result = await Linking.openURL(url);
+    }
 
     return (
         <View style={styles.body}>
@@ -28,8 +31,7 @@ export default function MainScreen() {
                 style={styles.inputField}
                 placeholder="Enter here"
                 onChangeText={setText}
-                value={text}
-            />
+                value={text} />
             <Button
                 style={styles.button}
                 onPress={() => navigation.navigate("TextInput", { text: text })}
@@ -38,18 +40,24 @@ export default function MainScreen() {
                 style={styles.button}
                 onPress={() => navigation.navigate("CountWords", { text: text })}
                 text="Count words" />
+            <Button
+                style={styles.button}
+                onPress={onPressSendSms}
+                text="Send message" />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     button: {
-        width: "50%",
+        width: 200,
         height: 40,
         backgroundColor: "blue",
         borderRadius: 15,
         fontSize: 20,
-        color: "white"
+        color: "white",
+        marginTop: 5,
+        marginBottom: 5
     },
     buttonText: {
         fontSize: 20,
@@ -65,7 +73,8 @@ const styles = StyleSheet.create({
     body: {
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
+
     }
 })
 
