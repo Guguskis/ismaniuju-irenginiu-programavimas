@@ -1,18 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Autocomplete from "react-native-autocomplete-input";
 
-
-
-
-
 const MainScreen = () => {
-    const faculties = ["FMF", "AGAI", "TI"];
-    const autocompleteHelper = new AutocompleteHelper(faculties);
-
     const [name, setName] = useState("");
-    const [suggestions, setSuggestions] = useState([""])
+    const [faculty, setQuery, suggestions] = useAutocomplete(["FMF", "AGAI", "TI"]);
 
     return (
         <View style={{ top: 30 }}>
@@ -29,16 +22,10 @@ const MainScreen = () => {
                     <Autocomplete
                         placeholder="Enter faculty"
                         data={suggestions}
-                        defaultValue={autocompleteHelper.getQuery()}
-                        onChangeText={text => {
-                            autocompleteHelper.setQuery(text);
-                            setSuggestions(autocompleteHelper.getSuggestions());
-                        }}
+                        value={faculty}
+                        onChangeText={setQuery}
                         renderItem={({ item, index }) => (
-                            <TouchableOpacity onPress={() => {
-                                autocompleteHelper.setQuery(item);
-                                setSuggestions(autocompleteHelper.getSuggestions());
-                            }}>
+                            <TouchableOpacity onPress={() => setQuery(item)}>
                                 <Text>{item}</Text>
                             </TouchableOpacity>
                         )}
@@ -73,39 +60,37 @@ const styles = StyleSheet.create({
 })
 
 class AutocompleteHelper {
-    private items: Array<string>;
-    private query: string;
 
-    constructor(items: Array<string>) {
-        this.items = items;
-        this.query = "t";
-    }
+    static filterItems(query: string, items: string[]) {
+        if (query === "") return [];
+        const regex = new RegExp(`${query.trim()}`, 'i'); // i - flag for case insensitive
+        const filteredItems = items.filter(item => item.search(regex) >= 0);
 
-    public setQuery(value: string) {
-        this.query = value;
-    }
+        const queryMatchesLastItem = AutocompleteHelper.queryMatchesLastItem(query, filteredItems);
 
-    public getQuery() {
-        return this.query;
-    }
-
-    public getSuggestions() {
-        const filteredItems = this.getFilteredItems(this.query);
-        if (filteredItems.length === 1 && this.itemsEqual(this.query, filteredItems[0])) {
+        if (queryMatchesLastItem) {
             return [];
         } else {
             return filteredItems;
         }
     }
 
-    private getFilteredItems(query: string) {
-        if (query === "") return [];
-        const regex = new RegExp(`${query.trim()}`, 'i'); // i - flag for case insensitive
-        return this.items.filter(item => item.search(regex) >= 0);
+    static queryMatchesLastItem(query: string, filteredItems: string[]) {
+        if (filteredItems.length === 1) {
+            return query.toLowerCase().trim() === filteredItems[0].toLowerCase().trim();
+        } else {
+            return false;
+        }
     }
+}
 
-    private itemsEqual(a: string, b: string) {
-        return a.toLowerCase().trim() === b.toLowerCase().trim();
-    }
+function useAutocomplete(items: string[]): [string, (a: string) => void, string[]] {
+    const [query, setQuery] = useState("");
+    const [suggestions, setSuggestions] = useState([""]);
 
+    useEffect(() => {
+        setSuggestions(AutocompleteHelper.filterItems(query, items));
+    }, [query])
+
+    return [query, setQuery, suggestions];
 }
