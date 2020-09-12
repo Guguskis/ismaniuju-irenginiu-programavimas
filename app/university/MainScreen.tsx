@@ -5,7 +5,17 @@ import Autocomplete from "react-native-autocomplete-input";
 
 const MainScreen = () => {
     const [name, setName] = useState("");
-    const [faculty, setQuery, suggestions] = useAutocomplete(["FMF", "AGAI", "TI"]);
+    const [faculty, setQuery, suggestions] = useAutocomplete([
+        "AI - Aplinkos Inžinerijos fakultetas",
+        "AF - Architektūros fakultetas",
+        "EF - Elektronikos fakultetas",
+        "FMF - Fundamentinių mokslų fakultetas",
+        "KI - Kurybinių industrijų fakultetas",
+        "MF - Mechanikos fakultetas",
+        "SF - Statybos fakultetas",
+        "TI - Transporto Inžinerijos fakultetas",
+        "VV - Verslo Vadybos fakultetas"
+    ]);
 
     return (
         <View style={{ top: 30 }}>
