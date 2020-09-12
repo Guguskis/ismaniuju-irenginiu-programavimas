@@ -8,6 +8,7 @@ import Navigation from './app/navigation';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import BrowseItemsScreen from './app/screens/BrowseItemsScreen';
+import MainScreen from './app/university/MainScreen';
 // import { View } from './components/Themed';
 
 export default function App() {
@@ -19,8 +20,7 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
+        <MainScreen />
       </SafeAreaProvider>
     )
   }
