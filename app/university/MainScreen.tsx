@@ -24,9 +24,10 @@ const MainScreen = () => {
                         data={suggestions}
                         value={faculty}
                         onChangeText={setQuery}
-                        renderItem={({ item, index }) => (
-                            <TouchableOpacity onPress={() => setQuery(item)}>
-                                <Text>{item}</Text>
+                        keyExtractor={(item) => item.key.toString()}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => setQuery(item.value)}>
+                                <Text>{item.value}</Text>
                             </TouchableOpacity>
                         )}
                     />
@@ -61,10 +62,10 @@ const styles = StyleSheet.create({
 
 class AutocompleteHelper {
 
-    static filterItems(query: string, items: string[]) {
+    static filterItems(query: string, items: KeyedItem[]) {
         if (query === "") return [];
         const regex = new RegExp(`${query.trim()}`, 'i'); // i - flag for case insensitive
-        const filteredItems = items.filter(item => item.search(regex) >= 0);
+        const filteredItems = items.filter(item => item.value.search(regex) >= 0);
 
         const queryMatchesLastItem = AutocompleteHelper.queryMatchesLastItem(query, filteredItems);
 
@@ -75,22 +76,33 @@ class AutocompleteHelper {
         }
     }
 
-    static queryMatchesLastItem(query: string, filteredItems: string[]) {
+    static queryMatchesLastItem(query: string, filteredItems: KeyedItem[]) {
         if (filteredItems.length === 1) {
-            return query.toLowerCase().trim() === filteredItems[0].toLowerCase().trim();
+            const trimmedQuery = query.toLowerCase().trim();
+            const trimmedValue = filteredItems[0].value.toLowerCase().trim();
+            return trimmedQuery === trimmedValue;
         } else {
             return false;
         }
     }
 }
 
-function useAutocomplete(items: string[]): [string, (a: string) => void, string[]] {
+function useAutocomplete(items: string[]): [string, (a: string) => void, KeyedItem[]] {
     const [query, setQuery] = useState("");
-    const [suggestions, setSuggestions] = useState([""]);
+    const [suggestions, setSuggestions] = useState<KeyedItem[]>([]);
+
+    const keyedItems = items.map((item, index) => {
+        return { key: index, value: item };
+    });
 
     useEffect(() => {
-        setSuggestions(AutocompleteHelper.filterItems(query, items));
+        setSuggestions(AutocompleteHelper.filterItems(query, keyedItems));
     }, [query])
 
     return [query, setQuery, suggestions];
+}
+
+interface KeyedItem {
+    key: number,
+    value: string
 }
