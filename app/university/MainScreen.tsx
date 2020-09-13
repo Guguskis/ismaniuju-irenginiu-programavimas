@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity, Switch, ToastAndroid } from 'react-native';
+import { Text, TextInput, View, StyleSheet, Switch, ToastAndroid } from 'react-native';
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import Autocomplete from "react-native-autocomplete-input";
 import StarRating from "react-native-star-rating";
@@ -22,6 +23,7 @@ const MainScreen = () => {
         "TI - Transporto Inžinerijos fakultetas",
         "VV - Verslo Vadybos fakultetas"
     ]);
+
     const [rating, setRating] = useState(0);
 
     const [date, setDate] = useState(new Date());
@@ -152,11 +154,10 @@ const styles = StyleSheet.create({
     autocompleteContainer: {
         flex: 1,
         left: 0,
-        // position: 'absolute',
         right: 0,
         top: 25,
         zIndex: 1,
-        height: 100
+        minHeight: 100
     },
     button: {
         backgroundColor: "#ccc",
