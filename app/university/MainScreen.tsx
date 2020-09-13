@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, Switch } from 'react-native';
 
 import Autocomplete from "react-native-autocomplete-input";
 import StarRating from "react-native-star-rating";
@@ -43,6 +43,8 @@ const MainScreen = () => {
     }
 
     const [day, setDay] = useState(stringa.days[0].value);
+
+    const [register, setRegister] = useState(false);
 
     return (
         <View style={{ top: 30 }}>
@@ -106,6 +108,14 @@ const MainScreen = () => {
                         onChange={(event, date) => onChangeSetDate(date)} />
                 }
                 <Text style={{ paddingLeft: 10 }}>{formatTime()}</Text>
+            </View>
+            {/* Register switch */}
+            <View style={styles.row}>
+                <Text style={styles.label}>Register:</Text>
+                <Switch
+                    onValueChange={setRegister}
+                    value={register}
+                />
             </View>
         </View>
     );
