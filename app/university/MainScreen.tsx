@@ -3,7 +3,8 @@ import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-nativ
 
 import Autocomplete from "react-native-autocomplete-input";
 import StarRating from "react-native-star-rating";
-import DatePicker from "react-native-date-picker";
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Button from './Button';
 
 const MainScreen = () => {
     const [name, setName] = useState("");
@@ -19,7 +20,24 @@ const MainScreen = () => {
         "VV - Verslo Vadybos fakultetas"
     ]);
     const [rating, setRating] = useState(0);
+
     const [date, setDate] = useState(new Date());
+    const [showTimeWheel, setShowTimeWheel] = useState(false);
+
+    const onChangeSetDate = (date: Date | undefined) => {
+        setShowTimeWheel(false);
+        if (date) {
+            setDate(date);
+        }
+    }
+
+    const formatTime = () => {
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const formattedHours = hours < 10 ? "0" + hours : hours;
+        const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+        return `${formattedHours}:${formattedMinutes}`;
+    }
 
     return (
         <View style={{ top: 30 }}>
@@ -56,12 +74,23 @@ const MainScreen = () => {
                 />
             </View>
             {/* Time picker */}
-            {/* <View style={styles.row}>
+            <View style={styles.row}>
                 <Text style={styles.label}>Time:</Text>
-                <DatePicker
-                    date={date}
-                    onDateChange={setDate} />
-            </View> */}
+                <Button
+                    style={styles.button}
+                    onPress={() => setShowTimeWheel(true)}
+                    text="Select time"
+                />
+                {showTimeWheel &&
+                    <DateTimePicker
+                        value={date}
+                        mode="time"
+                        is24Hour={true}
+                        display="spinner"
+                        onChange={(event, date) => onChangeSetDate(date)} />
+                }
+                <Text style={{ paddingLeft: 10 }}>{formatTime()}</Text>
+            </View>
         </View>
     );
 }
@@ -86,6 +115,13 @@ const styles = StyleSheet.create({
         top: 25,
         zIndex: 1,
         height: 100
+    },
+    button: {
+        backgroundColor: "#ccc",
+        color: "black",
+        borderRadius: 5,
+        width: 150,
+        height: 25
     }
 })
 
