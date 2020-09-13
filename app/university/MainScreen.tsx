@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity, Switch } from 'react-native';
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, Switch, ToastAndroid } from 'react-native';
 
 import Autocomplete from "react-native-autocomplete-input";
 import StarRating from "react-native-star-rating";
@@ -45,6 +45,17 @@ const MainScreen = () => {
     const [day, setDay] = useState(stringa.days[0].value);
 
     const [register, setRegister] = useState(false);
+
+    const onPressSave = () => {
+        let message = "";
+        message += `Name ${name}\n`;
+        message += `Faculty ${faculty}\n`;
+        message += `Rating ${rating}\n`;
+        message += `Day ${day}\n`;
+        message += `Time ${formatTime()}\n`;
+        message += `Register ${register}`;
+        ToastAndroid.show(message, ToastAndroid.SHORT);
+    }
 
     return (
         <View style={{ top: 30 }}>
@@ -117,6 +128,11 @@ const MainScreen = () => {
                     value={register}
                 />
             </View>
+            {/* Save button */}
+            <Button
+                style={styles.button}
+                text="Save"
+                onPress={onPressSave} />
         </View>
     );
 }

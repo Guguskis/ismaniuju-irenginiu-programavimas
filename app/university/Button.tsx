@@ -22,7 +22,7 @@ export default Button;
 
 const styles = StyleSheet.create({
     text: {
-        width: "100%",
+        flex: 1,
         textAlignVertical: "center",
         textAlign: "center"
     }
