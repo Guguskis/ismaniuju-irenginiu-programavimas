@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 
 import Autocomplete from "react-native-autocomplete-input";
 import StarRating from "react-native-star-rating";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DropDownPicker from 'react-native-dropdown-picker';
+
 import Button from './Button';
+import stringa from '../config/stringa';
 
 const MainScreen = () => {
     const [name, setName] = useState("");
@@ -39,6 +42,8 @@ const MainScreen = () => {
         return `${formattedHours}:${formattedMinutes}`;
     }
 
+    const [day, setDay] = useState(stringa.days[0].value);
+
     return (
         <View style={{ top: 30 }}>
             {/* Name field */}
@@ -72,6 +77,17 @@ const MainScreen = () => {
                     rating={rating}
                     selectedStar={setRating}
                 />
+            </View>
+            {/* Day picker */}
+            <View style={styles.row}>
+                <Text style={styles.label}>Day:</Text>
+                <DropDownPicker
+                    items={stringa.days}
+                    defaultValue={day}
+                    onChangeItem={(item) => setDay(item.value)}
+                    style={styles.dropdown}
+                    itemStyle={styles.dropdownItem}
+                    activeItemStyle={styles.dropdownActiveItem} />
             </View>
             {/* Time picker */}
             <View style={styles.row}>
@@ -122,6 +138,17 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: 150,
         height: 25
+    },
+    dropdown: {
+        backgroundColor: '#fafafa',
+        width: 200
+    },
+    dropdownItem: {
+        justifyContent: 'flex-start'
+    },
+    dropdownActiveItem: {
+        backgroundColor: "#ddd",
+        borderRadius: 5
     }
 })
 
