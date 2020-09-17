@@ -8,7 +8,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import Button from './Button';
-import stringa from '../config/stringa';
+import strings from '../config/strings';
 
 const MainScreen = () => {
     const [name, setName] = useState("");
@@ -44,7 +44,7 @@ const MainScreen = () => {
         return `${formattedHours}:${formattedMinutes}`;
     }
 
-    const [day, setDay] = useState(stringa.days[0].value);
+    const [day, setDay] = useState(strings.days[0].value);
 
     const [register, setRegister] = useState(false);
 
@@ -97,7 +97,7 @@ const MainScreen = () => {
             <View style={styles.row}>
                 <Text style={styles.label}>Day:</Text>
                 <DropDownPicker
-                    items={stringa.days}
+                    items={strings.days}
                     defaultValue={day}
                     onChangeItem={(item) => setDay(item.value)}
                     style={styles.dropdown}

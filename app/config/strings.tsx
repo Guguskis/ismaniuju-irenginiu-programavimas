@@ -1,4 +1,4 @@
-export default {
+const strings = {
     days:
         [
             { label: "Monday", value: "monday" },
@@ -11,3 +11,5 @@ export default {
         ]
 
 }
+
+export default strings;
