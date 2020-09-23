@@ -11,7 +11,7 @@ const FragmentLetterA = (props: Props) => {
     let message = `There are ${letterACount} of letter A`;
     return (
         <View style={styles.fragment}>
-            <Text style={styles.fragmentTitle}>Text statistics fragment</Text>
+            <Text style={styles.fragmentTitle}>Letter A fragment</Text>
             <Text>{message}</Text>
         </View>
     );
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         width: "100%",
         bottom: 0,
-        minHeight: 100,
+        height: 100,
         backgroundColor: "#aaf",
         padding: 5
     },
