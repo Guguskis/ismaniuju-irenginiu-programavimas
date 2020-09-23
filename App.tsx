@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import useCachedResources from './app/hooks/useCachedResources';
 import useColorScheme from './app/hooks/useColorScheme';
@@ -9,7 +9,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import BrowseItemsScreen from './app/screens/BrowseItemsScreen';
 import MainScreen from './app/university/MainScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 // import { View } from './components/Themed';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -19,9 +23,9 @@ export default function App() {
     return null;
   } else {
     return (
-      <SafeAreaProvider style={{ flex: 1 }}>
+      <SafeAreaProvider >
         <MainScreen />
-      </SafeAreaProvider>
+      </SafeAreaProvider >
     )
   }
 }
