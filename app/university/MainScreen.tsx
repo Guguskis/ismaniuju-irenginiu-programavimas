@@ -1,3 +1,4 @@
+import { useBackHandler } from '@react-native-community/hooks';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -5,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from './Button';
 import FragmentLetterA from './FragmentLetterA';
 import FragmentTextStatistics from './FragmentTextStatistics';
+import useStack from './useStack';
 
 interface Item {
     text: string,
@@ -24,11 +26,18 @@ const MainScreen = () => {
 
     const [selectedItemId, setSelectedItemId] = useState<String>();
 
+    const [lastStackElement, pushStack, popStack] = useStack();
+    useBackHandler(() => {
+        popStack();
+        return true;
+    });
+
     const renderItem = (data: any) => {
         const item = (data.item as Item);
         const onPressItem = () => {
             // deselect if pressed on same?
             setSelectedItemId(item.id);
+            pushStack(item.id);
         }
 
         return (
@@ -39,14 +48,9 @@ const MainScreen = () => {
         );
     }
 
-    const getSelectedItem = () => {
-        const selectedItems = data.filter(item => item.id === selectedItemId);
-        return selectedItems[0];
-    }
-
     const getFragment = () => {
         if (selectedItemId) {
-            const selectedItem = getSelectedItem();
+            const selectedItem = data.filter(item => item.id === selectedItemId)[0];
             const text = selectedItem.text;
             const letterACount = text.match(/a|A/g)?.length;
 
@@ -66,6 +70,7 @@ const MainScreen = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <Text>{lastStackElement}</Text>
             <FlatList
                 style={styles.container}
                 contentContainerStyle={styles.containerItems}
