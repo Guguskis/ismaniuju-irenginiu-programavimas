@@ -1,6 +1,6 @@
 import { useBackHandler } from '@react-native-community/hooks';
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Button from './Button';
@@ -24,9 +24,7 @@ const MainScreen = () => {
         { text: "ASDADSDASD", id: "6" }
     ];
 
-    const [selectedItemId, setSelectedItemId] = useState<String>();
-
-    const [lastStackElement, pushStack, popStack] = useStack();
+    const [selectedItemId, setSelectedItemId, popStack] = useStack();
     useBackHandler(() => {
         popStack();
         return true;
@@ -37,7 +35,6 @@ const MainScreen = () => {
         const onPressItem = () => {
             // deselect if pressed on same?
             setSelectedItemId(item.id);
-            pushStack(item.id);
         }
 
         return (
@@ -70,7 +67,7 @@ const MainScreen = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <Text>{lastStackElement}</Text>
+            <Text>{selectedItemId}</Text>
             <FlatList
                 style={styles.container}
                 contentContainerStyle={styles.containerItems}
