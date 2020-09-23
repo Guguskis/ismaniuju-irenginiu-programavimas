@@ -16,12 +16,15 @@ interface Item {
 const MainScreen = () => {
 
     const data = [
-        { text: "One is enough", id: "1" },
-        { text: "Two is no more", id: "2" },
-        { text: "LTT store dot com", id: "3" },
-        { text: "No text with letter ei", id: "4" },
-        { text: "One more", id: "5" },
-        { text: "ASDADSDASD", id: "6" }
+        { id: "1", text: "One is enough" },
+        { id: "2", text: "Two is no more" },
+        { id: "3", text: "LTT store dot com" },
+        { id: "4", text: "No text with letter ei" },
+        { id: "5", text: "Thanos did nothing wrong" },
+        { id: "6", text: "This has a couple of A letters" },
+        { id: "7", text: "Perfectly balanced" },
+        { id: "8", text: "Lorem ipsum dolor sit amet, consectetur adipiscing" },
+        { id: "9", text: "Thanos did nothing wrong" },
     ];
 
     const [selectedItemId, setSelectedItemId, popStack] = useStack();
@@ -33,8 +36,9 @@ const MainScreen = () => {
     const renderItem = (data: any) => {
         const item = (data.item as Item);
         const onPressItem = () => {
-            // deselect if pressed on same?
-            setSelectedItemId(item.id);
+            if (item.id !== selectedItemId) {
+                setSelectedItemId(item.id);
+            }
         }
 
         return (
@@ -67,7 +71,6 @@ const MainScreen = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <Text>{selectedItemId}</Text>
             <FlatList
                 style={styles.container}
                 contentContainerStyle={styles.containerItems}
