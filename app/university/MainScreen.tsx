@@ -23,8 +23,7 @@ const MainScreen = () => {
         { id: "5", text: "Thanos did nothing wrong" },
         { id: "6", text: "This has a couple of A letters" },
         { id: "7", text: "Perfectly balanced" },
-        { id: "8", text: "Lorem ipsum dolor sit amet, consectetur adipiscing" },
-        { id: "9", text: "Thanos did nothing wrong" },
+        { id: "8", text: "Loream ipsuam doloar sita ameat, consecteatur aadipiscing" }
     ];
 
     const [selectedItemId, setSelectedItemId, popStack] = useStack();
@@ -53,19 +52,18 @@ const MainScreen = () => {
         if (selectedItemId) {
             const selectedItem = data.filter(item => item.id === selectedItemId)[0];
             const text = selectedItem.text;
-            const letterACount = text.match(/a|A/g)?.length;
+            const containsSymbolA = text.match(/a|A/g)?.length;
 
-            if (letterACount || letterACount === 0) {
-                return (
-                    <FragmentLetterA
-                        getText={() => text} />
-                );
+            let fragment;
+
+            const getText = () => text;
+            if (containsSymbolA) {
+                fragment = <FragmentLetterA getText={getText} />;
             } else {
-                return (
-                    <FragmentTextStatistics
-                        getText={() => text} />
-                );
+                fragment = <FragmentTextStatistics getText={getText} />;
             }
+
+            return fragment;
         }
     }
 
@@ -96,7 +94,8 @@ const styles = StyleSheet.create({
         height: 40,
         marginBottom: 3,
         backgroundColor: "#ccc",
-        borderRadius: 10
+        borderRadius: 10,
+        padding: 1
     },
     fragment: {
         position: "absolute",
