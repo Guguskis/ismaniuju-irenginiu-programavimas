@@ -36,7 +36,7 @@ interface Props {
     onItemSelected: (label: string) => void
 }
 
-export default function Menu(props: Props) {
+export default function SideMenuContainer(props: Props) {
     return (
         <ScrollView scrollsToTop={false} style={styles.menu}>
             <Text
@@ -53,6 +53,6 @@ export default function Menu(props: Props) {
     );
 }
 
-Menu.propTypes = {
+SideMenuContainer.propTypes = {
     onItemSelected: PropTypes.func.isRequired,
 };

@@ -5,7 +5,8 @@ import SideMenu from 'react-native-side-menu-updated';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Button from './Button';
-import Menu from './Menu';
+import SideMenuContainer from './SideMenuContainer';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 
 const MainScreen = () => {
 
@@ -29,7 +30,7 @@ const MainScreen = () => {
             const now = new Date();
             const diffTime = Math.abs(date.getTime() - now.getTime());
             const diffMinutes = Math.ceil(diffTime / (1000 * 60));
-            return `Time difference is ${diffMinutes} minute${diffMinutes > 0 ? "s" : ""}`;
+            return `Time difference is ${diffMinutes} minute${diffMinutes == 1 ? "" : "s"}`;
         } else {
             return "You haven't selected time yet"
         }
@@ -44,19 +45,30 @@ const MainScreen = () => {
     }
 
     const toggleMenu = () => setIsMenuOpen(isOpen => !isOpen);
-    const menu = <Menu onItemSelected={onItemSelected} />
+    const sideMenu = <SideMenuContainer onItemSelected={onItemSelected} />
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <SideMenu
-                menu={menu}
+                menu={sideMenu}
                 isOpen={isMenuOpen}
                 onChange={(isOpen) => setIsMenuOpen(isOpen)}>
                 <View style={styles.container}>
-                    <Text
-                        style={styles.text}>
-                        {getTimeDifferenceMessage(selectedDate)}
-                    </Text>
+                    <Menu>
+                        <MenuTrigger >
+                            <Text
+                                style={styles.text}>
+                                {getTimeDifferenceMessage(selectedDate)}
+                            </Text>
+                        </MenuTrigger>
+                        <MenuOptions>
+                            <MenuOption onSelect={() => alert(`Save`)} text='Save' />
+                            <MenuOption onSelect={() => alert(`Delete`)} >
+                                <Text style={{ color: 'red' }}>Delete</Text>
+                            </MenuOption>
+                            <MenuOption onSelect={() => alert(`Not called`)} disabled={true} text='Disabled' />
+                        </MenuOptions>
+                    </Menu>
                 </View>
                 <Button
                     style={styles.menuButton}
@@ -71,6 +83,7 @@ const MainScreen = () => {
                     display="spinner"
                     onChange={(event, date) => onChangeSetDate(date)} />
             }
+
         </SafeAreaView>
     );
 }
