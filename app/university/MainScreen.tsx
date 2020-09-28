@@ -8,11 +8,18 @@ import Button from './Button';
 import SideMenuContainer from './SideMenuContainer';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 
+const getTimeDifferenceMessage = (date: Date) => {
+    const now = new Date();
+    const diffTime = Math.abs(date.getTime() - now.getTime());
+    const diffMinutes = Math.ceil(diffTime / (1000 * 60));
+    return `Time difference is ${diffMinutes} minute${diffMinutes == 1 ? "" : "s"}`;
+}
+
 const MainScreen = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showTimeWheel, setShowTimeWheel] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [timeDifferenceMessage, setTimeDifferenceMessage] = useState("You haven't selected time yet");
 
     const onItemSelected = (label: string) => {
 
@@ -25,22 +32,12 @@ const MainScreen = () => {
         setIsMenuOpen(false);
     }
 
-    const getTimeDifferenceMessage = (date: Date) => {
-        if (date) {
-            const now = new Date();
-            const diffTime = Math.abs(date.getTime() - now.getTime());
-            const diffMinutes = Math.ceil(diffTime / (1000 * 60));
-            return `Time difference is ${diffMinutes} minute${diffMinutes == 1 ? "" : "s"}`;
-        } else {
-            return "You haven't selected time yet"
-        }
-    }
-
     const onChangeSetDate = (date: Date | undefined) => {
         setShowTimeWheel(false);
         if (date) {
-            setSelectedDate(date);
-            Alert.alert(getTimeDifferenceMessage(date));
+            const message = getTimeDifferenceMessage(date);
+            setTimeDifferenceMessage(message);
+            Alert.alert(message);
         }
     }
 
@@ -58,7 +55,7 @@ const MainScreen = () => {
                         <MenuTrigger >
                             <Text
                                 style={styles.text}>
-                                {getTimeDifferenceMessage(selectedDate)}
+                                {timeDifferenceMessage}
                             </Text>
                         </MenuTrigger>
                         <MenuOptions>
@@ -77,7 +74,7 @@ const MainScreen = () => {
             </SideMenu>
             {showTimeWheel &&
                 <DateTimePicker
-                    value={selectedDate}
+                    value={new Date()}
                     mode="time"
                     is24Hour={true}
                     display="spinner"
