@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text, Alert, BackHandler } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SideMenu from 'react-native-side-menu-updated';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -15,10 +15,10 @@ const MainScreen = () => {
 
     const onItemSelected = (label: string) => {
 
-        if (label.toLocaleLowerCase("hour difference")) {
+        if (label.toLowerCase() == "hour difference") {
             setShowTimeWheel(true);
-        } else if (label.toLocaleLowerCase("exit")) {
-            // todo kill program
+        } else if (label.toLowerCase() == "exit") {
+            BackHandler.exitApp();
         }
 
         setIsMenuOpen(false);
