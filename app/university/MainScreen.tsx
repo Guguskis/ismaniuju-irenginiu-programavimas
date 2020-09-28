@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SideMenu from 'react-native-side-menu-updated';
-
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Button from './Button';
 import Menu from './Menu';
@@ -10,15 +10,40 @@ import Menu from './Menu';
 const MainScreen = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [showTimeWheel, setShowTimeWheel] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     const onItemSelected = (label: string) => {
-        console.log(label);
+
+        if (label.toLocaleLowerCase("hour difference")) {
+            setShowTimeWheel(true);
+        } else if (label.toLocaleLowerCase("exit")) {
+            // todo kill program
+        }
+
+        setIsMenuOpen(false);
     }
 
-    const toggleMenu = () => {
-        setIsMenuOpen(isOpen => !isOpen);
+    const getTimeDifferenceMessage = (date: Date) => {
+        if (date) {
+            const now = new Date();
+            const diffTime = Math.abs(date.getTime() - now.getTime());
+            const diffMinutes = Math.ceil(diffTime / (1000 * 60));
+            return `Time difference is ${diffMinutes} minute${diffMinutes > 0 ? "s" : ""}`;
+        } else {
+            return "You haven't selected time yet"
+        }
     }
 
+    const onChangeSetDate = (date: Date | undefined) => {
+        setShowTimeWheel(false);
+        if (date) {
+            setSelectedDate(date);
+            Alert.alert(getTimeDifferenceMessage(date));
+        }
+    }
+
+    const toggleMenu = () => setIsMenuOpen(isOpen => !isOpen);
     const menu = <Menu onItemSelected={onItemSelected} />
 
     return (
@@ -28,13 +53,24 @@ const MainScreen = () => {
                 isOpen={isMenuOpen}
                 onChange={(isOpen) => setIsMenuOpen(isOpen)}>
                 <View style={styles.container}>
-                    <Text style={styles.welcome}>Hello</Text>
+                    <Text
+                        style={styles.text}>
+                        {getTimeDifferenceMessage(selectedDate)}
+                    </Text>
                 </View>
                 <Button
                     style={styles.menuButton}
                     onPress={toggleMenu}
                     text={isMenuOpen ? "<" : ">"} />
             </SideMenu>
+            {showTimeWheel &&
+                <DateTimePicker
+                    value={selectedDate}
+                    mode="time"
+                    is24Hour={true}
+                    display="spinner"
+                    onChange={(event, date) => onChangeSetDate(date)} />
+            }
         </SafeAreaView>
     );
 }
@@ -52,11 +88,10 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingTop: 50,
         backgroundColor: '#F5FCFF',
     },
-    welcome: {
+    text: {
         fontSize: 20,
         textAlign: 'center',
         margin: 10,
