@@ -15,11 +15,16 @@ const getTimeDifferenceMessage = (date: Date) => {
     return `Time difference is ${diffMinutes} minute${diffMinutes == 1 ? "" : "s"}`;
 }
 
+const getSymbolCountMessage = (text: string) => {
+    return `Text contains ${text.length} symbols`;
+}
+
 const MainScreen = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showTimeWheel, setShowTimeWheel] = useState(false);
     const [timeDifferenceMessage, setTimeDifferenceMessage] = useState("You haven't selected time yet");
+    const [symbolCountMessage, setSymbolCountMessage] = useState("You haven't selected text yet");
 
     const onItemSelected = (label: string) => {
 
@@ -59,11 +64,20 @@ const MainScreen = () => {
                             </Text>
                         </MenuTrigger>
                         <MenuOptions>
-                            <MenuOption onSelect={() => alert(`Save`)} text='Save' />
-                            <MenuOption onSelect={() => alert(`Delete`)} >
-                                <Text style={{ color: 'red' }}>Delete</Text>
-                            </MenuOption>
-                            <MenuOption onSelect={() => alert(`Not called`)} disabled={true} text='Disabled' />
+                            <MenuOption text='Count symbols' onSelect={() => setSymbolCountMessage(getSymbolCountMessage(timeDifferenceMessage))} />
+                            <MenuOption text="delete" onSelect={() => alert(`Delete`)} />
+                        </MenuOptions>
+                    </Menu>
+                    <Menu>
+                        <MenuTrigger >
+                            <Text
+                                style={styles.text}>
+                                {symbolCountMessage}
+                            </Text>
+                        </MenuTrigger>
+                        <MenuOptions>
+                            <MenuOption text='Count symbols' onSelect={() => setSymbolCountMessage(getSymbolCountMessage(symbolCountMessage))} />
+                            <MenuOption text="delete" onSelect={() => alert(`Delete`)} />
                         </MenuOptions>
                     </Menu>
                 </View>
