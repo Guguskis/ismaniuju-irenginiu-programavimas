@@ -25,6 +25,7 @@ const MainScreen = () => {
     const [showTimeWheel, setShowTimeWheel] = useState(false);
     const [timeDifferenceMessage, setTimeDifferenceMessage] = useState("You haven't selected time yet");
     const [symbolCountMessage, setSymbolCountMessage] = useState("You haven't selected text yet");
+    const [singleLetterMessage, setSingleLetterMessage] = useState("");
 
     const onItemSelected = (label: string) => {
 
@@ -43,6 +44,17 @@ const MainScreen = () => {
             const message = getTimeDifferenceMessage(date);
             setTimeDifferenceMessage(message);
             Alert.alert(message);
+        }
+    }
+
+    const startSingleLetterIteration = async (text: string) => {
+        function sleep(ms: number) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        for (let i = 0; i < text.length; i++) {
+            setSingleLetterMessage(text[i]);
+            await sleep(1000);
         }
     }
 
@@ -65,7 +77,7 @@ const MainScreen = () => {
                         </MenuTrigger>
                         <MenuOptions>
                             <MenuOption text='Count symbols' onSelect={() => setSymbolCountMessage(getSymbolCountMessage(timeDifferenceMessage))} />
-                            <MenuOption text="delete" onSelect={() => alert(`Delete`)} />
+                            <MenuOption text="Display each letter" onSelect={() => startSingleLetterIteration(timeDifferenceMessage)} />
                         </MenuOptions>
                     </Menu>
                     <Menu>
@@ -77,9 +89,10 @@ const MainScreen = () => {
                         </MenuTrigger>
                         <MenuOptions>
                             <MenuOption text='Count symbols' onSelect={() => setSymbolCountMessage(getSymbolCountMessage(symbolCountMessage))} />
-                            <MenuOption text="delete" onSelect={() => alert(`Delete`)} />
+                            <MenuOption text="Display each letter" onSelect={() => startSingleLetterIteration(symbolCountMessage)} />
                         </MenuOptions>
                     </Menu>
+                    <Text style={styles.text}>{singleLetterMessage}</Text>
                 </View>
                 <Button
                     style={styles.menuButton}
