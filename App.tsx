@@ -3,10 +3,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from './app/hooks/useCachedResources';
 import useColorScheme from './app/hooks/useColorScheme';
-import MainScreen from './app/university/MainScreen';
+import MainScreen from './app/university/first-task/MainScreen';
 import Navigation from './app/navigation';
 import { StatusBar } from 'react-native';
-import Index from './app/university/Index';
+import Index from './app/university/first-task/Index';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
