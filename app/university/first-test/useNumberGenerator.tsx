@@ -5,7 +5,7 @@ function sleep(ms: number) {
 }
 
 const useNumberGenerator = () => {
-    const [isUpdating, setIsUpdating] = useState(false);
+    const [isLooping, setIsLooping] = useState(false);
     const [generatedNumber, setGeneratedNumber] = useState<number>(0);
 
     const [lowerBound, setLowerBound] = useState<number>(0);
@@ -13,42 +13,46 @@ const useNumberGenerator = () => {
 
     function start(lowerBound: number, upperBound: number) {
 
-        if (isUpdating) return;
+        if (isLooping) return;
 
         setLowerBound(lowerBound);
         setUpperBound(upperBound);
-        setIsUpdating(true);
+        setIsLooping(true);
     }
 
-    const startLoop = async () => {
-        while (isUpdating) {
-            // between 0 and 1
-            let number = Math.random();
-            // between 0 and bound difference
-            number *= upperBound - lowerBound;
-            // between lowerbound and upperBound
-            number += lowerBound;
-            setGeneratedNumber(Math.round(number));
-
-            await sleep(500);
-            console.log(`State ${isUpdating}`);
-
-        }
+    const generateNumber = () => {
+        // between 0 and 1
+        let number = Math.random();
+        // between 0 and bound difference
+        number *= upperBound - lowerBound;
+        // between lowerbound and upperBound
+        number += lowerBound;
+        setGeneratedNumber(Math.round(number));
     }
 
-    function stop() {
-        setIsUpdating(false);
+    const stop = () => {
+        setIsLooping(false);
     }
 
     useEffect(() => {
+        const startLoop = async () => {
+            while (isLooping) {
+                generateNumber();
+                console.log(`inside while ${isLooping}`)
+                await sleep(500);
+            }
+        }
 
-        if (isUpdating) {
+        if (isLooping) {
             startLoop();
         }
 
-    }, [isUpdating])
+        console.log(`end useEffect ${isLooping}`);
 
-    return [generatedNumber, start, stop] as const;
+
+    }, [isLooping])
+
+    return [generatedNumber, start, stop, isLooping] as const;
 }
 
 export default useNumberGenerator;
