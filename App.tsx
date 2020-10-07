@@ -8,7 +8,7 @@ import Navigation from './app/navigation';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import BrowseItemsScreen from './app/screens/BrowseItemsScreen';
-import MainScreen from './app/university/MainScreen';
+import MainScreen from './app/university/fifth-task/MainScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 // import { View } from './components/Themed';
