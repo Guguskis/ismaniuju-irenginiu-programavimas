@@ -6,7 +6,7 @@ function sleep(ms: number) {
 
 const useNumberGenerator = () => {
     const [isLooping, setIsLooping] = useState(false);
-    const [generatedNumber, setGeneratedNumber] = useState<number>(0);
+    const [number, setNumber] = useState<number>(0);
 
     const [lowerBound, setLowerBound] = useState<number>(0);
     const [upperBound, setUpperBound] = useState<number>(0);
@@ -20,6 +20,10 @@ const useNumberGenerator = () => {
         setIsLooping(true);
     }
 
+    const stop = () => {
+        setIsLooping(false);
+    }
+
     const generateNumber = () => {
         // between 0 and 1
         let number = Math.random();
@@ -27,32 +31,18 @@ const useNumberGenerator = () => {
         number *= upperBound - lowerBound;
         // between lowerbound and upperBound
         number += lowerBound;
-        setGeneratedNumber(Math.round(number));
-    }
-
-    const stop = () => {
-        setIsLooping(false);
+        setNumber(Math.round(number));
     }
 
     useEffect(() => {
-        const startLoop = async () => {
-            while (isLooping) {
-                generateNumber();
-                console.log(`inside while ${isLooping}`)
-                await sleep(500);
-            }
-        }
-
         if (isLooping) {
-            startLoop();
+            generateNumber();
+            const id = setInterval(generateNumber, 500);
+            return () => clearInterval(id);
         }
-
-        console.log(`end useEffect ${isLooping}`);
-
-
     }, [isLooping])
 
-    return [generatedNumber, start, stop, isLooping] as const;
+    return [number, start, stop] as const;
 }
 
 export default useNumberGenerator;

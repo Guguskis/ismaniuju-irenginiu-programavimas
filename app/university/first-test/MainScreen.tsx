@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const MainScreen = () => {
-    const [number, start, stop, isUpdating] = useNumberGenerator();
+    const [number, start, stop] = useNumberGenerator();
 
     return (
         <SafeAreaView>
@@ -17,7 +17,6 @@ const MainScreen = () => {
                 text="Stop"
                 onPress={() => stop()} />
             <Text>The number {number}</Text>
-            <Text>Is updating {isUpdating ? "yes" : "no"}</Text>
         </SafeAreaView>
     );
 }
