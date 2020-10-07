@@ -8,7 +8,7 @@ import Navigation from './app/navigation';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import BrowseItemsScreen from './app/screens/BrowseItemsScreen';
-import MainScreen from './app/university/MainScreen';
+import MainScreen from './app/university/third-task/MainScreen';
 // import { View } from './components/Themed';
 
 export default function App() {

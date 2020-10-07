@@ -8,7 +8,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import Button from './Button';
-import strings from '../config/strings';
+import strings from '../../config/strings';
 
 const MainScreen = () => {
     const [name, setName] = useState("");
