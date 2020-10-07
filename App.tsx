@@ -2,11 +2,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from './app/hooks/useCachedResources';
-import useColorScheme from './app/hooks/useColorScheme';
-import MainScreen from './app/university/first-task/MainScreen';
-import Navigation from './app/navigation';
-import { StatusBar } from 'react-native';
-import Index from './app/university/first-task/Index';
+import Index from './app/university/second-task/Index';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -21,19 +17,3 @@ export default function App() {
     )
   }
 }
-
-// export default function App() {
-//   const isLoadingComplete = useCachedResources();
-//   const colorScheme = useColorScheme();
-
-//   if (!isLoadingComplete) {
-//     return null;
-//   } else {
-//     return (
-//       <SafeAreaProvider>
-//         <Navigation colorScheme={colorScheme} />
-//         <StatusBar />
-//       </SafeAreaProvider>
-//     );
-//   }
-// }
