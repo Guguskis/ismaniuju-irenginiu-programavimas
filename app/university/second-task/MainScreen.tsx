@@ -12,9 +12,11 @@ export default function MainScreen() {
 
     const [text, setText] = useState("");
 
-    // Update text field value from another Screen
     useEffect(() => {
-        setText(route.params?.text);
+        const changedText = route.params?.text;
+        if (changedText) {
+            setText(changedText);
+        }
     }, [route.params?.text]);
 
     const onPressSendSms = async () => {
@@ -22,7 +24,7 @@ export default function MainScreen() {
         const divider = Platform.OS === "ios" ? "&" : "?";
         const url = `sms:LTT store dot com${divider}body=${smsText}`;
 
-        const result = await Linking.openURL(url);
+        Linking.openURL(url);
     }
 
     return (
