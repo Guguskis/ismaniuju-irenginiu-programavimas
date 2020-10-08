@@ -13,8 +13,7 @@ const MainScreen = () => {
 
         const action = "android.intent.action.WEB_SEARCH";
         const extras = [
-            { "query": "dddddd" },
-            { "flag": "FLAG_ACTIVITY_NEW_TASK" }
+            { key: "query", value: "dddddd" }
         ];
 
         Linking.sendIntent(action, extras);
