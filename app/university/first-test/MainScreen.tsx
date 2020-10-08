@@ -15,9 +15,9 @@ const MainScreen = () => {
         const extras = [
             { "query": "dddddd" },
             { "flag": "FLAG_ACTIVITY_NEW_TASK" }
-        ]; +
+        ];
 
-            Linking.sendIntent(action, extras);
+        Linking.sendIntent(action, extras);
     }
 
     return (
