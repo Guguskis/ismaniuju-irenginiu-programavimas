@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const MainScreen = () => {
 
     const [subscribe, setSubscribe] = useState(false);
-    const [batteryLevel, setBatteryLevel] = useState<Number>();
+    const [batteryLevel, setBatteryLevel] = useState<Number>(1);
     const [eventSubscription, setEventSubscription] = useState<Subscription>();
 
 
@@ -30,7 +30,8 @@ const MainScreen = () => {
     }
 
     useEffect(() => {
-        console.log(`Battery level is ${batteryLevel}`);
+        if (batteryLevel <= 0.15)
+            console.log(`Battery level is ${batteryLevel}`);
     }, [batteryLevel])
 
     return (
