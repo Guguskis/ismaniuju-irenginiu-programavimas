@@ -3,7 +3,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import useCachedResources from './app/hooks/useCachedResources';
 import MainScreen from './app/university/first-test/MainScreen';
-import Index from './app/university/second-task/Index';
+import Index from './app/university/seventh-task/MainScreen';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
