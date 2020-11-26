@@ -89,9 +89,11 @@ const MainScreen = () => {
 
     return (
         <SafeAreaView style={styles.body}>
-            <Text style={styles.text}>{`Data is expired: ${expired}`}</Text>
-            <Text style={styles.text}>{`Md5: ${md5}`}</Text>
-            <Text style={styles.text}>{`LocalMd5: ${storageMd5}`}</Text>
+            <View>
+                <Text style={styles.text}>{`Data is expired: ${expired}`}</Text>
+                <Text style={styles.text}>{`Md5: ${md5}`}</Text>
+                <Text style={styles.text}>{`LocalMd5: ${storageMd5}`}</Text>
+            </View>
             {expired ?
                 <View>
 
@@ -130,6 +132,6 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     text: {
-        fontSize: 10
+        fontSize: 15
     }
 })
