@@ -96,14 +96,27 @@ const MainScreen = () => {
             }
             {
                 graphType == "LINE" ?
-                    <LineChart
-                        style={{ height: 400 }}
-                        data={[vowels, consonants, digits]}
-                        svg={{ stroke: 'rgb(134, 65, 244)' }}
-                        contentInset={{ top: 30, bottom: 30 }}
-                    >
-                        <Grid />
-                    </LineChart>
+                    <View style={{ height: 400, flexDirection: 'row' }}>
+                        <YAxis
+                            data={[vowels, consonants, digits]}
+                            contentInset={{ top: 30, bottom: 30 }}
+                            svg={{
+                                fill: 'grey',
+                                fontSize: 10,
+                            }}
+                            numberOfTicks={10}
+                            formatLabel={(value) => `${value}`}
+                        />
+                        <LineChart
+                            style={{ flex: 1 }}
+                            data={[vowels, consonants, digits]}
+                            svg={{ stroke: 'rgb(134, 65, 244)' }}
+                            contentInset={{ top: 30, bottom: 30 }}
+                        >
+                            <Grid />
+                        </LineChart>
+                    </View>
+
                     :
                     null
             }
