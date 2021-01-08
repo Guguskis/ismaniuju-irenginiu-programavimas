@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, Switch, TextInput } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, StyleSheet, Text, Switch, TextInput, processColor, PushNotificationIOS } from 'react-native';
 import useAxios from 'axios-hooks';
 import Button from './Button';
+import { BarChart, Grid, LineChart } from 'react-native-svg-charts';
 
 const MainScreen = () => {
+
+    const [graphType, setGraphType] = useState("");
 
     const [text, setText] = useState("");
 
@@ -28,28 +30,52 @@ const MainScreen = () => {
         setDigits(getCount("\\d", text))
     }, [text])
 
+    const fill = 'rgb(134, 65, 244)'
+
+
     return (
-        <SafeAreaView style={styles.body}>
+        <View style={styles.body}>
             <View style={styles.fragment}>
                 <TextInput
                     style={styles.textInput}
                     onChangeText={setText} />
                 <Button
                     style={styles.button}
-                    text="Bar chart" />
+                    text="Bar chart"
+                    onPress={() => graphType == "BAR" ? setGraphType("") : setGraphType("BAR")} />
                 <Button
                     style={styles.button}
-                    text="Line chart" />
+                    text="Line chart"
+                    onPress={() => graphType == "LINE" ? setGraphType("") : setGraphType("LINE")} />
                 <Button
                     style={styles.button}
                     text="Notification" />
             </View>
-            <View style={styles.fragment}>
-                <Text>{`${vowels} ${consonants} ${digits}`}</Text>
-            </View>
-
-
-        </SafeAreaView>
+            {
+                graphType == "BAR" ?
+                    <BarChart
+                        style={{ height: 400 }}
+                        data={[vowels, consonants, digits]}
+                        svg={{ fill }}
+                        contentInset={{ top: 30, bottom: 30 }}
+                    >
+                        <Grid />
+                    </BarChart> : null
+            }
+            {
+                graphType == "LINE" ?
+                    <LineChart
+                        style={{ height: 400 }}
+                        data={[vowels, consonants, digits]}
+                        svg={{ stroke: 'rgb(134, 65, 244)' }}
+                        contentInset={{ top: 30, bottom: 30 }}
+                    >
+                        <Grid />
+                    </LineChart>
+                    :
+                    null
+            }
+        </View>
     );
 }
 
@@ -57,10 +83,7 @@ export default MainScreen;
 
 const styles = StyleSheet.create({
     body: {
-        // flexDirection: "column",
-        // justifyContent: "center",
-        // alignItems: "center",
-        flex: 1
+        height: 650
     },
     button: {
         backgroundColor: '#336',
@@ -80,7 +103,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     fragment: {
-        borderWidth: 1,
+        // borderWidth: 1,
         flex: 1,
         margin: 10,
         flexDirection: "column",
