@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import useCachedResources from './app/hooks/useCachedResources';
-import MainScreen from './app/university/test-2/MainScreen';
+import MainScreen from './app/university/test-3/MainScreen';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
