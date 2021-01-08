@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, Switch, TextInput, processColor, PushNotificationIOS } from 'react-native';
 import useAxios from 'axios-hooks';
 import Button from './Button';
-import { BarChart, Grid, LineChart } from 'react-native-svg-charts';
+import { BarChart, Grid, LineChart, YAxis } from 'react-native-svg-charts';
 import * as Notifications from 'expo-notifications';
 
 Notifications.setNotificationHandler({
@@ -72,14 +72,27 @@ const MainScreen = () => {
             </View>
             {
                 graphType == "BAR" ?
-                    <BarChart
-                        style={{ height: 400 }}
-                        data={[vowels, consonants, digits]}
-                        svg={{ fill }}
-                        contentInset={{ top: 30, bottom: 30 }}
-                    >
-                        <Grid />
-                    </BarChart> : null
+                    <View style={{ height: 400, flexDirection: 'row' }}>
+                        <YAxis
+                            data={[vowels, consonants, digits]}
+                            contentInset={{ top: 30, bottom: 30 }}
+                            svg={{
+                                fill: 'grey',
+                                fontSize: 10,
+                            }}
+                            numberOfTicks={10}
+                            formatLabel={(value) => `${value}`}
+                        />
+                        <BarChart
+                            style={{ flex: 1 }}
+                            data={[vowels, consonants, digits]}
+                            svg={{ fill }}
+                            contentInset={{ top: 30, bottom: 30 }}
+                        >
+                            <Grid />
+                        </BarChart>
+                    </View>
+                    : null
             }
             {
                 graphType == "LINE" ?
