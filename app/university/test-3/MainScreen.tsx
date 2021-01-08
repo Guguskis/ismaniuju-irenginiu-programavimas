@@ -3,6 +3,15 @@ import { View, StyleSheet, Text, Switch, TextInput, processColor, PushNotificati
 import useAxios from 'axios-hooks';
 import Button from './Button';
 import { BarChart, Grid, LineChart } from 'react-native-svg-charts';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    })
+});
 
 const MainScreen = () => {
 
@@ -32,6 +41,15 @@ const MainScreen = () => {
 
     const fill = 'rgb(134, 65, 244)'
 
+    const scheduleNotification = () => {
+        Notifications.scheduleNotificationAsync({
+            content: {
+                title: text,
+                body: `vowels=${vowels}  consonants=${consonants}  digits=${digits}`,
+            },
+            trigger: null,
+        });
+    }
 
     return (
         <View style={styles.body}>
@@ -49,7 +67,8 @@ const MainScreen = () => {
                     onPress={() => graphType == "LINE" ? setGraphType("") : setGraphType("LINE")} />
                 <Button
                     style={styles.button}
-                    text="Notification" />
+                    text="Notification"
+                    onPress={scheduleNotification} />
             </View>
             {
                 graphType == "BAR" ?
