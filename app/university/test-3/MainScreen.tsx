@@ -72,22 +72,19 @@ const MainScreen = () => {
             </View>
             {
                 graphType == "BAR" ?
-                    <View style={{ height: 400, flexDirection: 'row' }}>
+                    <View style={styles.chartContainer}>
                         <YAxis
                             data={[vowels, consonants, digits]}
-                            contentInset={{ top: 30, bottom: 30 }}
-                            svg={{
-                                fill: 'grey',
-                                fontSize: 10,
-                            }}
+                            contentInset={styles.chartInset}
+                            svg={chartYAxisStyle}
                             numberOfTicks={10}
                             formatLabel={(value) => `${value}`}
                         />
                         <BarChart
-                            style={{ flex: 1 }}
+                            style={styles.chart}
                             data={[vowels, consonants, digits]}
                             svg={{ fill }}
-                            contentInset={{ top: 30, bottom: 30 }}
+                            contentInset={styles.chartInset}
                         >
                             <Grid />
                         </BarChart>
@@ -96,22 +93,19 @@ const MainScreen = () => {
             }
             {
                 graphType == "LINE" ?
-                    <View style={{ height: 400, flexDirection: 'row' }}>
+                    <View style={styles.chartContainer}>
                         <YAxis
                             data={[vowels, consonants, digits]}
-                            contentInset={{ top: 30, bottom: 30 }}
-                            svg={{
-                                fill: 'grey',
-                                fontSize: 10,
-                            }}
+                            contentInset={styles.chartInset}
+                            svg={chartYAxisStyle}
                             numberOfTicks={10}
                             formatLabel={(value) => `${value}`}
                         />
                         <LineChart
-                            style={{ flex: 1 }}
+                            style={styles.chart}
                             data={[vowels, consonants, digits]}
                             svg={{ stroke: 'rgb(134, 65, 244)' }}
-                            contentInset={{ top: 30, bottom: 30 }}
+                            contentInset={styles.chartInset}
                         >
                             <Grid />
                         </LineChart>
@@ -148,11 +142,25 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     fragment: {
-        // borderWidth: 1,
         flex: 1,
         margin: 10,
         flexDirection: "column",
-        // justifyContent: "center",
         alignItems: "center",
+    },
+    chartContainer: {
+        height: 400,
+        flexDirection: 'row'
+    },
+    chart: {
+        flex: 1
+    },
+    chartInset: {
+        top: 30,
+        bottom: 30
     }
 })
+
+const chartYAxisStyle = {
+    fill: 'grey',
+    fontSize: 10,
+}
